@@ -20,10 +20,10 @@ const verifyToken = (req, res, next) => {
     // Verifica se o token é válido e não expirou
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Salva o ID do usuário dentro da requisição para podermos usar nos controllers depois
+    
     req.userId = decoded.id; 
     
-    return next(); // Tudo certo, pode passar para a rota!
+    return next(); 
   } catch (error) {
     return res.status(401).json({ error: 'Token inválido ou expirado.' });
   }
