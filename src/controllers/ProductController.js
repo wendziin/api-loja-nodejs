@@ -42,10 +42,10 @@ const createProduct = async (req, res) => {
         product_id: product.id,
         title: opt.title,
         shape: opt.shape || 'square',
-        // O README manda "4px", extraímos apenas o número 4 para salvar no INTEGER
+
         radius: opt.radius ? parseInt(opt.radius.replace(/\D/g, '')) : 0,
         type: opt.type || 'text',
-        // O README usa 'value' em uma opção e 'values' na outra. Tratamos as duas:
+
         values: opt.values ? opt.values.join(',') : (opt.value ? opt.value.join(',') : '')
       }));
       await ProductOption.bulkCreate(optionRecords);
@@ -90,7 +90,7 @@ const getProductById = async (req, res) => {
       category_ids: product.categories.map(cat => cat.id),
       images: product.images.map(img => ({
         id: img.id,
-        content: img.path // O README chama de content, mas salvamos o caminho
+        content: img.path
       })),
       options: product.options.map(opt => ({
         id: opt.id,
@@ -117,8 +117,7 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ error: 'Produto não encontrado.' });
     }
 
-    // Ao deletar o produto, o Sequelize apaga as imagens e opções automaticamente
-    // por causa daquele "onDelete: 'CASCADE'" que colocamos na Migration!
+
     await product.destroy();
 
     return res.status(204).send();
@@ -333,5 +332,5 @@ module.exports = {
   getProductById,
   deleteProduct,
   updateProduct,
-  searchProducts // Não esqueça de exportar!
+  searchProducts
 };
