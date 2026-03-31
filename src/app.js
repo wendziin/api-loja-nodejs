@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-// Importaremos as rotas aqui em breve
+
 const userRoutes = require('./routes/userRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const productRoutes = require('./routes/productRoutes');
