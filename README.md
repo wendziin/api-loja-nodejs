@@ -163,3 +163,8 @@ Para executar os testes:
 npm test
 
 Certifique-se de que o banco de dados esteja criado e configurado antes de rodar os testes.
+
+### 📖 Documentação Interativa (Swagger)
+A API possui uma documentação visual e interativa gerada com Swagger, onde é possível visualizar detalhes dos endpoints e testar as rotas diretamente pelo navegador.
+Após iniciar o servidor localmente, acesse:
+[http://localhost:3000/api-docs](http://localhost:3000/api-docs)

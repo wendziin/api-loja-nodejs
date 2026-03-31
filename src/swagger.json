@@ -1,0 +1,64 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentação da API Loja",
+    "description": "API RESTful para gestão de usuários, categorias e produtos.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor Local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/v1/user/token": {
+      "post": {
+        "summary": "Gerar Token JWT",
+        "description": "Faz o login do usuário e retorna o token de acesso.",
+        "tags": ["Usuários"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "example": "wendel@mail.com" },
+                  "password": { "type": "string", "example": "senha_super_segura123" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Token gerado com sucesso" },
+          "400": { "description": "Credenciais inválidas" }
+        }
+      }
+    },
+    "/v1/category/search": {
+      "get": {
+        "summary": "Buscar Categorias",
+        "description": "Retorna uma lista de categorias com paginação.",
+        "tags": ["Categorias"],
+        "parameters": [
+          { "in": "query", "name": "limit", "schema": { "type": "integer", "default": 12 } },
+          { "in": "query", "name": "page", "schema": { "type": "integer", "default": 1 } }
+        ],
+        "responses": {
+          "200": { "description": "Lista de categorias retornada com sucesso" }
+        }
+      }
+    }
+  }
+}
