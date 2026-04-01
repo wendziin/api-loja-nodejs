@@ -67,7 +67,7 @@ const getProductById = async (req, res) => {
     // Busca o produto e inclui os relacionamentos
     const product = await Product.findByPk(id, {
       include: [
-        { model: Category, as: 'categories', attributes: ['id'] },
+        { model: Category, as: 'categories', attributes: ['id', 'name'] },
         { model: ProductImage, as: 'images', attributes: ['id', 'path'] },
         { model: ProductOption, as: 'options', attributes: ['id', 'title', 'shape', 'radius', 'type', 'values'] }
       ]
@@ -88,6 +88,7 @@ const getProductById = async (req, res) => {
       price: product.price,
       price_with_discount: product.price_with_discount,
       category_ids: product.categories.map(cat => cat.id),
+      category_names: product.categories.map(cat => cat.name),
       images: product.images.map(img => ({
         id: img.id,
         content: img.path
@@ -251,11 +252,11 @@ const searchProducts = async (req, res) => {
         model: Category,
         as: 'categories',
         where: { id: { [Op.in]: ids } },
-        attributes: ['id'],
+        attributes: ['id', 'name'],
         through: { attributes: [] } // Esconde a tabela de junção da resposta
       });
     } else {
-      includeClause.push({ model: Category, as: 'categories', attributes: ['id'], through: { attributes: [] } });
+      includeClause.push({ model: Category, as: 'categories', attributes: ['id', 'name'], through: { attributes: [] } });
     }
 
     // Incluindo Imagens e Opções para a formatação
@@ -303,6 +304,7 @@ const searchProducts = async (req, res) => {
         price: prodJson.price,
         price_with_discount: prodJson.price_with_discount,
         category_ids: prodJson.categories ? prodJson.categories.map(cat => cat.id) : [],
+        category_names: prodJson.categories ? prodJson.categories.map(cat => cat.name) : [],
         images: prodJson.images ? prodJson.images.map(img => ({ id: img.id, content: img.path })) : [],
         options: prodJson.options ? prodJson.options.map(opt => ({
           id: opt.id,

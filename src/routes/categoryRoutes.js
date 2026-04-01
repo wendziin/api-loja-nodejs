@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const CategoryController = require('../controllers/CategoryController');
-const verifyToken = require('../middleware/auth'); // Trazendo o nosso "segurança"
+const verifyToken = require('../middleware/auth');
 
 
 router.get('/search', CategoryController.searchCategories);
+router.get('/', CategoryController.searchCategories); // Adicionado para suportar listagem genérica
 router.get('/:id', CategoryController.getCategoryById);
 
 
