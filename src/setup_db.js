@@ -3,7 +3,7 @@ const path = require('path');
 
 const migrate = () => {
   console.log('Iniciando Migrations...');
-  const cmd = `npx sequelize-cli db:migrate --env production`;
+  const cmd = `npx sequelize-cli db:migrate`;
   
   exec(cmd, (error, stdout, stderr) => {
     if (error) {
@@ -16,7 +16,7 @@ const migrate = () => {
     console.log(`Stdout Migrations: ${stdout}`);
     
     console.log('Iniciando Seeders...');
-    const seedCmd = `npx sequelize-cli db:seed:all --env production`;
+    const seedCmd = `npx sequelize-cli db:seed:all`;
     exec(seedCmd, (errorSeed, stdoutSeed, stderrSeed) => {
       if (errorSeed) {
         console.error(`Erro nos Seeders: ${errorSeed.message}`);
